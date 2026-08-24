@@ -11,13 +11,14 @@ import Todo from "../Todo/Todo";
 import "../Todo/Todo.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Alert from "@mui/material/Alert";
+import AlertMo from "../alert/Alert";
 export default function TodoCard() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
   const [EditId, setEditId] = useState(null);
+  const [AlertShow, setAlertShow] = useState(false);
+  const [AlertMessage, setAlertMessage] = useState("");
   const ButtonLabel = EditId !== null ? "تعديل" : "إضافة";
-
   //***Add Todo***
   function AddTodo(todo) {
     if (EditId !== null) {
@@ -26,7 +27,9 @@ export default function TodoCard() {
           return t.id === EditId ? { ...t, title: input } : t;
         }),
       );
+      setAlertMessage("تم التعديل المهمة بنجاح");
       console.log(todos);
+      ShowAlert();
       setEditId(null);
       setInput("");
 
@@ -39,6 +42,8 @@ export default function TodoCard() {
         title: input,
       },
     ]);
+    setAlertMessage("تمت اضافة المهمة بنجاح");
+    ShowAlert();
     setInput("");
   }
   //*** Delete Todo***
@@ -46,6 +51,8 @@ export default function TodoCard() {
     const newtodos = todos.filter((t) => {
       return t.id != id;
     });
+    setAlertMessage("تم حذف المهمة بنجاح");
+    ShowAlert();
     console.log(todos);
     setTodos(newtodos);
   }
@@ -59,7 +66,12 @@ export default function TodoCard() {
   function ClearInput() {
     setInput("");
   }
-  //function ShowAlert() {}
+  function ShowAlert() {
+    setAlertShow(true);
+    setTimeout(() => {
+      setAlertShow(false);
+    }, 2000);
+  }
   const todojsx = todos.map((t) => {
     console.log(todos);
     if (t.title != "")
@@ -100,12 +112,12 @@ export default function TodoCard() {
               AddTodoFunction={AddTodo}
               Todo={{ id: uuidv4(), title: input }}
               ClearInput={ClearInput}
-              //Alert={ShowAlert}
             />
             <InsertTodo input={input} setInput={setInput} />
           </CardActions>
         </Card>
       </Container>
+      {AlertShow ? <AlertMo alertlabel={AlertMessage} /> : <></>}
     </>
   );
 }
