@@ -14,10 +14,32 @@ import { v4 as uuidv4 } from "uuid";
 import Alert from "@mui/material/Alert";
 export default function TodoCard() {
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([{ id: "", title: "" }]);
+  const [todos, setTodos] = useState([]);
+  const [EditId, setEditId] = useState(null);
+  const ButtonLabel = EditId !== null ? "تعديل" : "إضافة";
+
   //***Add Todo***
   function AddTodo(todo) {
-    setTodos((prev) => [...prev, { id: todo.id, title: todo.title }]);
+    if (EditId !== null) {
+      setTodos((prev) =>
+        prev.map((t) => {
+          return t.id === EditId ? { ...t, title: input } : t;
+        }),
+      );
+      console.log(todos);
+      setEditId(null);
+      setInput("");
+
+      return;
+    }
+    setTodos((prev) => [
+      ...prev,
+      {
+        id: uuidv4(),
+        title: input,
+      },
+    ]);
+    setInput("");
   }
   //*** Delete Todo***
   function DeleteTodo(id) {
@@ -29,17 +51,17 @@ export default function TodoCard() {
   }
   //***Edit Todo */
   function EditTodo(id) {
-    const newtodo = todos.filter((t) => t.id == id);
-
-    console.log(newtodo.title);
-    setInput(newtodo.title);
-    setTodos((prev) => [...prev, { id: id, title: input }]);
+    const todo = todos.find((t) => t.id == id);
+    console.log(todo.title);
+    setInput(todo.title);
+    setEditId(id);
   }
   function ClearInput() {
     setInput("");
   }
   //function ShowAlert() {}
   const todojsx = todos.map((t) => {
+    console.log(todos);
     if (t.title != "")
       return (
         <Todo
@@ -74,6 +96,7 @@ export default function TodoCard() {
             }}
           >
             <Add
+              ButtonLabel={ButtonLabel}
               AddTodoFunction={AddTodo}
               Todo={{ id: uuidv4(), title: input }}
               ClearInput={ClearInput}

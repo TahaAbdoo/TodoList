@@ -1,6 +1,11 @@
 import Button from "@mui/material/Button";
 import "../Todo/Todo.css";
-export default function Add({ AddTodoFunction, Todo, ClearInput }) {
+export default function Add({
+  ButtonLabel,
+  AddTodoFunction,
+  Todo,
+  ClearInput,
+}) {
   function AddTodo() {
     if (Todo.title != "") {
       AddTodoFunction(Todo);
@@ -19,7 +24,7 @@ export default function Add({ AddTodoFunction, Todo, ClearInput }) {
         className="tajawal-bold"
         onClick={AddTodo}
       >
-        إضــافــــة
+        {ButtonLabel}
       </Button>
     </>
   );
