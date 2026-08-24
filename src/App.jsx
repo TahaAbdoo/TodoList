@@ -9,7 +9,6 @@ function App() {
         justifyContent: "center",
         alignItems: "center",
       }}
-      s
     >
       <TodoCard />
     </div>

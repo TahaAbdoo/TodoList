@@ -7,7 +7,13 @@ import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
 
 import "./Todo.css";
-export default function Todo({ TodoName = "مهمة" }) {
+export default function Todo({ TodoName, id, DeleteAtodo, EditAtodo }) {
+  function DeleteTodo() {
+    DeleteAtodo(id);
+  }
+  function EditTodo() {
+    EditAtodo(id);
+  }
   const card = (
     <div>
       <CardContent
@@ -25,12 +31,14 @@ export default function Todo({ TodoName = "مهمة" }) {
             color="error"
             style={{ cursor: "pointer" }}
             className="DeleteIcon"
+            onClick={DeleteTodo}
           />
 
           <BorderColorRoundedIcon
             color="warning"
             style={{ cursor: "pointer" }}
             className="EditIcon"
+            onClick={EditTodo}
           />
 
           <CheckCircleTwoToneIcon

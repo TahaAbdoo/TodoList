@@ -1,8 +1,13 @@
 import Button from "@mui/material/Button";
 import "../Todo/Todo.css";
-export default function Add({ AddTodoFunction, Todo }) {
+export default function Add({ AddTodoFunction, Todo, ClearInput }) {
   function AddTodo() {
-    AddTodoFunction(Todo);
+    if (Todo.title != "") {
+      AddTodoFunction(Todo);
+      ClearInput();
+    } else {
+      alert("قم بكتابة المهمة");
+    }
   }
   return (
     <>
