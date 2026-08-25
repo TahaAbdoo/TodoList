@@ -15,6 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 import AlertMo from "../alert/Alert";
 import { jsx } from "react/jsx-runtime";
 import ToggleButtons from "../SortingTodos/ToggleButton";
+import Popup from "../Modal/Popup";
+import Modal from "@mui/material/Modal";
 export default function TodoCard() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
@@ -22,6 +24,8 @@ export default function TodoCard() {
   const [AlertShow, setAlertShow] = useState(false);
   const [AlertMessage, setAlertMessage] = useState("");
   const [filter, setFilter] = useState("all");
+  const [open, setOpen] = useState(false);
+  const [DeleteId, setDeleteId] = useState(null);
   const ButtonLabel = EditId !== null ? "تعديل" : "إضافة";
   //***Add Todo***
   function AddTodo(todo) {
@@ -51,16 +55,30 @@ export default function TodoCard() {
     ShowAlert();
     setInput("");
   }
+  function handleOpen() {
+    setOpen(true);
+    return true;
+  }
+  function handleClose() {
+    setOpen(false);
+    return false;
+  }
   //*** Delete Todo***
   function DeleteTodo(id) {
     const newtodos = todos.filter((t) => {
       return t.id != id;
     });
+    setOpen(false);
     setAlertMessage("تم حذف المهمة بنجاح");
     ShowAlert();
     console.log(todos);
     setTodos(newtodos);
   }
+  function ShowDeleteTodo(id) {
+    setDeleteId(id);
+    setOpen(true);
+  }
+
   //***Edit Todo */
   function EditTodo(id) {
     const todo = todos.find((t) => t.id == id);
@@ -123,7 +141,7 @@ export default function TodoCard() {
             key={t.id}
             TodoName={t.title}
             id={t.id}
-            DeleteAtodo={DeleteTodo}
+            DeleteAtodo={ShowDeleteTodo}
             EditAtodo={EditTodo}
             CheckTodo={DoneTodo}
             IsCompleted={t.isCompleted}
@@ -154,7 +172,7 @@ export default function TodoCard() {
             key={t.id}
             TodoName={t.title}
             id={t.id}
-            DeleteAtodo={DeleteTodo}
+            //DeleteAtodo={DeleteTodo}
             EditAtodo={EditTodo}
             CheckTodo={DoneTodo}
             IsCompleted={t.isCompleted}
@@ -199,6 +217,16 @@ export default function TodoCard() {
           </CardActions>
         </Card>
       </Container>
+      {open ? (
+        <Popup
+          id={DeleteId}
+          DeleteAtodo={DeleteTodo}
+          HandleOpen={handleOpen}
+          HandleClose={handleClose}
+        />
+      ) : (
+        <></>
+      )}
       {AlertShow ? <AlertMo alertlabel={AlertMessage} /> : <></>}
     </>
   );
