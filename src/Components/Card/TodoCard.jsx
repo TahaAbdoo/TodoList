@@ -163,44 +163,7 @@ export default function TodoCard() {
       }
     });
   }
-  /*  return todos.map((t) => {
-        if (t.title != "")
-          return (
-            <Todo
-              key={t.id}
-              TodoName={t.title}
-              id={t.id}
-              DeleteAtodo={DeleteTodo}
-              EditAtodo={EditTodo}
-              CheckTodo={DoneTodo}
-              IsCompleted={t.isCompleted}
-            />
-          );
-      });
-    } else if (sortId == 2) {
-      return todos.filter((t) => {
-        return t.isCompleted == true;
-      });
-    } else if (sortId == 3) {
-      return todos.filter((t) => {
-        return t.isCompleted == false;
-      });*/
 
-  /*const todojsx = todos.map((t) => {
-    console.log(todos);
-    if (t.title != "")
-      return (
-        <Todo
-          key={t.id}
-          TodoName={t.title}
-          id={t.id}
-          DeleteAtodo={DeleteTodo}
-          EditAtodo={EditTodo}
-          CheckTodo={DoneTodo}
-          IsCompleted={t.isCompleted}
-        />
-      );
-  });*/
   return (
     <>
       <Container maxWidth="sm">
