@@ -1,0 +1,62 @@
+@font-face {
+  font-family: "Tajawal";
+  src: url("../fonts/Readex_Pro/static/ReadexPro-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("../fonts/Readex_Pro/static/ReadexPro-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Tajawal";
+  src: url("../fonts/Readex_Pro/static/ReadexPro-Light.ttf") format("truetype");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Tajawal";
+  src: url("../fonts/Readex_Pro/static/ReadexPro-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Tajawal";
+  src: url("../fonts/Readex_Pro/static/ReadexPro-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Tajawal";
+  src: url("../fonts/Readex_Pro/static/ReadexPro-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+}
+
+.tajawal {
+  font-family: "Tajawal", sans-serif;
+}
+
+.tajawal-bold {
+  font-family: "Tajawal", sans-serif;
+  font-weight: 700;
+}
+
+.tajawal-semibold {
+  font-family: "Tajawal", sans-serif;
+  font-weight: 600;
+}
+.tajawal-medium {
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+}
+.tajawal-Regular {
+  font-family: "Tajawal", sans-serif;
+  font-weight: 400;
+}
+.tajawal-Light {
+  font-family: "Tajawal", sans-serif;
+  font-weight: 300;
+}
+.tajawal-ExtraLight {
+  font-family: "Tajawal", sans-serif;
+  font-weight: 300;
+}

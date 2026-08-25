@@ -52,3 +52,7 @@
   color:#00a6ff;
   transition: 0.4s;
 }
+.CancelIcon:hover{
+  color:#e51111d8;
+  transition: 0.4s;
+}

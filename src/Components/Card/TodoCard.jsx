@@ -9,9 +9,11 @@ import TextField from "@mui/material/TextField";
 import InsertTodo from "../TextInput/InsertTodo";
 import Todo from "../Todo/Todo";
 import "../Todo/Todo.css";
+//import "../styles/fonts.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AlertMo from "../alert/Alert";
+import { jsx } from "react/jsx-runtime";
 export default function TodoCard() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
@@ -40,6 +42,7 @@ export default function TodoCard() {
       {
         id: uuidv4(),
         title: input,
+        isCompleted: false,
       },
     ]);
     setAlertMessage("تمت اضافة المهمة بنجاح");
@@ -63,14 +66,40 @@ export default function TodoCard() {
     setInput(todo.title);
     setEditId(id);
   }
+  //*** Cleart Input */
   function ClearInput() {
     setInput("");
   }
+  //*** Show The Alert */
   function ShowAlert() {
     setAlertShow(true);
     setTimeout(() => {
       setAlertShow(false);
     }, 2000);
+  }
+  //*** Check The Todo */
+  function DoneTodo(id) {
+    const todo = todos.find((t) => t.id == id);
+    if (todo.isCompleted == false) {
+      console.log(todo.title);
+      setTodos((prev) =>
+        prev.map((t) => {
+          return t.id === id ? { ...t, isCompleted: true } : t;
+        }),
+      );
+      setAlertMessage("تم إنجاز المهمة بنجاح");
+      ShowAlert();
+      return true;
+    } else {
+      setTodos((prev) =>
+        prev.map((t) => {
+          return t.id === id ? { ...t, isCompleted: false } : t;
+        }),
+      );
+      setAlertMessage("تم  الغاء إنجاز المهمة بنجاح");
+      ShowAlert();
+      return false;
+    }
   }
   const todojsx = todos.map((t) => {
     console.log(todos);
@@ -82,6 +111,8 @@ export default function TodoCard() {
           id={t.id}
           DeleteAtodo={DeleteTodo}
           EditAtodo={EditTodo}
+          CheckTodo={DoneTodo}
+          IsCompleted={t.isCompleted}
         />
       );
   });
@@ -91,9 +122,9 @@ export default function TodoCard() {
         <Card sx={{ minWidth: 275 }} style={{ height: "auto" }}>
           <CardContent>
             <Typography
-              className="tajawal-extrabold"
+              className="tajawal-bold"
               gutterBottom
-              sx={{ color: "#4590bb", fontSize: 40 }}
+              sx={{ color: "#4590bb", fontSize: "50px" }}
             >
               مــهامــي
             </Typography>

@@ -5,14 +5,25 @@ import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 import "./Todo.css";
-export default function Todo({ TodoName, id, DeleteAtodo, EditAtodo }) {
+export default function Todo({
+  TodoName,
+  id,
+  DeleteAtodo,
+  EditAtodo,
+  CheckTodo,
+  IsCompleted,
+}) {
   function DeleteTodo() {
     DeleteAtodo(id);
   }
   function EditTodo() {
     EditAtodo(id);
+  }
+  function DoneTodo() {
+    CheckTodo(id);
   }
   const card = (
     <div>
@@ -40,12 +51,21 @@ export default function Todo({ TodoName, id, DeleteAtodo, EditAtodo }) {
             className="EditIcon"
             onClick={EditTodo}
           />
-
-          <CheckCircleTwoToneIcon
-            color="success"
-            style={{ cursor: "pointer" }}
-            className="CheckIcon"
-          />
+          {!IsCompleted ? (
+            <CheckCircleTwoToneIcon
+              color="success"
+              style={{ cursor: "pointer" }}
+              className="CheckIcon"
+              onClick={DoneTodo}
+            />
+          ) : (
+            <CancelIcon
+              color="error"
+              style={{ cursor: "pointer" }}
+              className="CancelIcon"
+              onClick={DoneTodo}
+            />
+          )}
         </div>
 
         <Typography
