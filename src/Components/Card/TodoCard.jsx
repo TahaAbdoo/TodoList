@@ -14,12 +14,14 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AlertMo from "../alert/Alert";
 import { jsx } from "react/jsx-runtime";
+import ToggleButtons from "../SortingTodos/ToggleButton";
 export default function TodoCard() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
   const [EditId, setEditId] = useState(null);
   const [AlertShow, setAlertShow] = useState(false);
   const [AlertMessage, setAlertMessage] = useState("");
+  const [filter, setFilter] = useState("all");
   const ButtonLabel = EditId !== null ? "تعديل" : "إضافة";
   //***Add Todo***
   function AddTodo(todo) {
@@ -101,7 +103,90 @@ export default function TodoCard() {
       return false;
     }
   }
-  const todojsx = todos.map((t) => {
+  //** Sortig The Todos */
+  function SortingTodos(sortId) {
+    if (sortId === "all") {
+      setFilter("all");
+    } else if (sortId === "Completed") {
+      setFilter("Completed");
+    } else if (sortId === "UnCompleted") {
+      setFilter("UnCompleted");
+    }
+  }
+  //sort Varible
+  let FilterTodos = null;
+  if (filter == "all") {
+    FilterTodos = todos.map((t) => {
+      if (t.title != "")
+        return (
+          <Todo
+            key={t.id}
+            TodoName={t.title}
+            id={t.id}
+            DeleteAtodo={DeleteTodo}
+            EditAtodo={EditTodo}
+            CheckTodo={DoneTodo}
+            IsCompleted={t.isCompleted}
+          />
+        );
+    });
+  } else if (filter === "Completed") {
+    FilterTodos = todos.map((t) => {
+      if (t.isCompleted == true) {
+        return (
+          <Todo
+            key={t.id}
+            TodoName={t.title}
+            id={t.id}
+            DeleteAtodo={DeleteTodo}
+            EditAtodo={EditTodo}
+            CheckTodo={DoneTodo}
+            IsCompleted={t.isCompleted}
+          />
+        );
+      }
+    });
+  } else if (filter === "UnCompleted") {
+    FilterTodos = todos.map((t) => {
+      if (t.isCompleted == false) {
+        return (
+          <Todo
+            key={t.id}
+            TodoName={t.title}
+            id={t.id}
+            DeleteAtodo={DeleteTodo}
+            EditAtodo={EditTodo}
+            CheckTodo={DoneTodo}
+            IsCompleted={t.isCompleted}
+          />
+        );
+      }
+    });
+  }
+  /*  return todos.map((t) => {
+        if (t.title != "")
+          return (
+            <Todo
+              key={t.id}
+              TodoName={t.title}
+              id={t.id}
+              DeleteAtodo={DeleteTodo}
+              EditAtodo={EditTodo}
+              CheckTodo={DoneTodo}
+              IsCompleted={t.isCompleted}
+            />
+          );
+      });
+    } else if (sortId == 2) {
+      return todos.filter((t) => {
+        return t.isCompleted == true;
+      });
+    } else if (sortId == 3) {
+      return todos.filter((t) => {
+        return t.isCompleted == false;
+      });*/
+
+  /*const todojsx = todos.map((t) => {
     console.log(todos);
     if (t.title != "")
       return (
@@ -115,7 +200,7 @@ export default function TodoCard() {
           IsCompleted={t.isCompleted}
         />
       );
-  });
+  });*/
   return (
     <>
       <Container maxWidth="sm">
@@ -128,8 +213,11 @@ export default function TodoCard() {
             >
               مــهامــي
             </Typography>
+            <div>
+              <ToggleButtons SortTheTodos={SortingTodos} />
+            </div>
 
-            {todojsx}
+            {FilterTodos}
           </CardContent>
           <CardActions
             style={{
