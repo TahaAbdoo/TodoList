@@ -1,25 +1,23 @@
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import Box from "@mui/material/Box";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Add from "../Button/Add";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import InsertTodo from "../TextInput/InsertTodo";
-import Grid from "@mui/material/Grid";
 import Todo from "../Todo/Todo";
+import { v4 as uuidv4 } from "uuid";
 import "../Todo/Todo.css";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import AlertMo from "../alert/Alert";
-import { jsx } from "react/jsx-runtime";
 import ToggleButtons from "../SortingTodos/ToggleButton";
 import Popup from "../Modal/Popup";
-import Modal from "@mui/material/Modal";
+import { useContext } from "react";
+import { TodosContext } from "../../Contexts/TodosContexts";
 export default function TodoCard() {
+  //مصدر واحد للحقيقة
+  const { todos, setTodos } = useContext(TodosContext);
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([]);
   const [EditId, setEditId] = useState(null);
   const [AlertShow, setAlertShow] = useState(false);
   const [AlertMessage, setAlertMessage] = useState("");
@@ -102,7 +100,6 @@ export default function TodoCard() {
   function DoneTodo(id) {
     const todo = todos.find((t) => t.id == id);
     if (todo.isCompleted == false) {
-      console.log(todo.title);
       setTodos((prev) =>
         prev.map((t) => {
           return t.id === id ? { ...t, isCompleted: true } : t;
@@ -132,7 +129,7 @@ export default function TodoCard() {
       setFilter("UnCompleted");
     }
   }
-  //sort Varible
+  //sort Varible  Refactor
   let FilterTodos = null;
   if (filter == "all") {
     FilterTodos = todos.map((t) => {

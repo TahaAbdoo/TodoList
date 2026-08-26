@@ -6,7 +6,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
-
+import { useContext } from "react";
+import { TodosContext } from "../../Contexts/TodosContexts";
 import "./Todo.css";
 export default function Todo({
   TodoName,
@@ -16,6 +17,8 @@ export default function Todo({
   CheckTodo,
   IsCompleted,
 }) {
+  const { todos, setTodos } = useContext(TodosContext);
+
   function DeleteTodo() {
     DeleteAtodo(id);
   }
@@ -26,7 +29,7 @@ export default function Todo({
     CheckTodo(id);
   }
   const card = (
-    <div>
+    <div className="CardTodoEffect">
       <CardContent
         style={{
           display: "flex",

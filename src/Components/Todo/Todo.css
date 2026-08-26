@@ -15,3 +15,9 @@
   color:#e51111d8;
   transition: 0.4s;
 }
+.CardTodoEffect{
+  transition: 0.2s;
+}
+.CardTodoEffect:hover{
+  padding: 10px 0;
+}
