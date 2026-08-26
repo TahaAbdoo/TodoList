@@ -9,6 +9,7 @@ export default function InsertTodo({ input, setInput }) {
         variant="outlined"
         dir="rtl"
         color="error"
+        fullWidth
         className="tajawal-bold"
         value={input}
         onChange={(e) => {

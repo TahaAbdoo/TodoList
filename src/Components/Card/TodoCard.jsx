@@ -7,9 +7,9 @@ import Add from "../Button/Add";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import InsertTodo from "../TextInput/InsertTodo";
+import Grid from "@mui/material/Grid";
 import Todo from "../Todo/Todo";
 import "../Todo/Todo.css";
-//import "../styles/fonts.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AlertMo from "../alert/Alert";
@@ -26,6 +26,7 @@ export default function TodoCard() {
   const [filter, setFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const [DeleteId, setDeleteId] = useState(null);
+
   const ButtonLabel = EditId !== null ? "تعديل" : "إضافة";
   //***Add Todo***
   function AddTodo(todo) {
@@ -205,15 +206,20 @@ export default function TodoCard() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              gap: "30px",
             }}
           >
-            <Add
-              ButtonLabel={ButtonLabel}
-              AddTodoFunction={AddTodo}
-              Todo={{ id: uuidv4(), title: input }}
-              ClearInput={ClearInput}
-            />
-            <InsertTodo input={input} setInput={setInput} />
+            <div>
+              <Add
+                ButtonLabel={ButtonLabel}
+                AddTodoFunction={AddTodo}
+                Todo={{ id: uuidv4(), title: input }}
+                ClearInput={ClearInput}
+              />
+            </div>
+            <div style={{ width: "60%", marginLeft: "30px" }}>
+              <InsertTodo input={input} setInput={setInput} />
+            </div>
           </CardActions>
         </Card>
       </Container>
