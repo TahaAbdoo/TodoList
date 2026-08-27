@@ -8,7 +8,7 @@ export default function Add({
 }) {
   function AddTodo() {
     if (Todo.title != "") {
-      AddTodoFunction(Todo);
+      AddTodoFunction();
       ClearInput();
     } else {
       alert("قم بكتابة المهمة");

@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
@@ -16,16 +15,6 @@ const style = {
 };
 
 export default function Popup({ id, DeleteAtodo, HandleOpen, HandleClose }) {
-  console.log("CLose ???  " + HandleClose);
-  console.log("OPen ???  " + HandleOpen);
-
-  const [Show, sethow] = React.useState(false);
-  /*const handleOpen = () => {
-    setOpen(true);
-  };*/
-  /* const handleClose = () => {
-    setOpen(false);
-  };*/
   function DeleteTodo() {
     DeleteAtodo(id);
   }

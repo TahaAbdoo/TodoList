@@ -16,26 +16,31 @@ import { useContext } from "react";
 import { TodosContext } from "../../Contexts/TodosContexts";
 export default function TodoCard() {
   //مصدر واحد للحقيقة
+  //y
   const { todos, setTodos } = useContext(TodosContext);
+  //y
   const [input, setInput] = useState("");
+  //y
   const [EditId, setEditId] = useState(null);
+  //y
   const [AlertShow, setAlertShow] = useState(false);
+
+  //n
   const [AlertMessage, setAlertMessage] = useState("");
+  const [Alert, SetAlert] = useState("");
   const [filter, setFilter] = useState("all");
   const [open, setOpen] = useState(false);
   const [DeleteId, setDeleteId] = useState(null);
-
   const ButtonLabel = EditId !== null ? "تعديل" : "إضافة";
   //***Add Todo***
-  function AddTodo(todo) {
+  function AddTodo() {
     if (EditId !== null) {
       setTodos((prev) =>
         prev.map((t) => {
           return t.id === EditId ? { ...t, title: input } : t;
         }),
       );
-      setAlertMessage("تم التعديل المهمة بنجاح");
-      console.log(todos);
+      SetAlert("تم تعديل المهمة بنجاح");
       ShowAlert();
       setEditId(null);
       setInput("");
@@ -50,17 +55,14 @@ export default function TodoCard() {
         isCompleted: false,
       },
     ]);
-    setAlertMessage("تمت اضافة المهمة بنجاح");
+
+    SetAlert("تمت الاضافة ");
     ShowAlert();
     setInput("");
   }
-  function handleOpen() {
-    setOpen(true);
-    return true;
-  }
+  //***handle close Popup */
   function handleClose() {
     setOpen(false);
-    return false;
   }
   //*** Delete Todo***
   function DeleteTodo(id) {
@@ -68,9 +70,8 @@ export default function TodoCard() {
       return t.id != id;
     });
     setOpen(false);
-    setAlertMessage("تم حذف المهمة بنجاح");
+    SetAlert("تم حذف المهمة بنجاح");
     ShowAlert();
-    console.log(todos);
     setTodos(newtodos);
   }
   function ShowDeleteTodo(id) {
@@ -80,32 +81,30 @@ export default function TodoCard() {
 
   //***Edit Todo */
   function EditTodo(id) {
-    const todo = todos.find((t) => t.id == id);
-    console.log(todo.title);
+    const todo = todos.find((t) => t.id === id);
     setInput(todo.title);
     setEditId(id);
   }
-  //*** Cleart Input */
+  //*** ClearInput */
   function ClearInput() {
     setInput("");
   }
   //*** Show The Alert */
   function ShowAlert() {
-    setAlertShow(true);
     setTimeout(() => {
-      setAlertShow(false);
+      SetAlert("");
     }, 2000);
   }
   //*** Check The Todo */
   function DoneTodo(id) {
-    const todo = todos.find((t) => t.id == id);
-    if (todo.isCompleted == false) {
+    const todo = todos.find((t) => t.id === id);
+    if (todo.isCompleted === false) {
       setTodos((prev) =>
         prev.map((t) => {
           return t.id === id ? { ...t, isCompleted: true } : t;
         }),
       );
-      setAlertMessage("تم إنجاز المهمة بنجاح");
+      SetAlert("تم إنجاز المهمة بنجاح");
       ShowAlert();
       return true;
     } else {
@@ -114,7 +113,7 @@ export default function TodoCard() {
           return t.id === id ? { ...t, isCompleted: false } : t;
         }),
       );
-      setAlertMessage("تم  الغاء إنجاز المهمة بنجاح");
+      SetAlert("تم  الغاء إنجاز المهمة بنجاح");
       ShowAlert();
       return false;
     }
@@ -129,57 +128,29 @@ export default function TodoCard() {
       setFilter("UnCompleted");
     }
   }
+
   //sort Varible  Refactor
   let FilterTodos = null;
-  if (filter == "all") {
-    FilterTodos = todos.map((t) => {
-      if (t.title != "")
-        return (
-          <Todo
-            key={t.id}
-            TodoName={t.title}
-            id={t.id}
-            DeleteAtodo={ShowDeleteTodo}
-            EditAtodo={EditTodo}
-            CheckTodo={DoneTodo}
-            IsCompleted={t.isCompleted}
-          />
-        );
-    });
+  if (filter === "all") {
+    FilterTodos = todos;
   } else if (filter === "Completed") {
-    FilterTodos = todos.map((t) => {
-      if (t.isCompleted == true) {
-        return (
-          <Todo
-            key={t.id}
-            TodoName={t.title}
-            id={t.id}
-            DeleteAtodo={DeleteTodo}
-            EditAtodo={EditTodo}
-            CheckTodo={DoneTodo}
-            IsCompleted={t.isCompleted}
-          />
-        );
-      }
-    });
+    FilterTodos = todos.filter((t) => t.isCompleted);
   } else if (filter === "UnCompleted") {
-    FilterTodos = todos.map((t) => {
-      if (t.isCompleted == false) {
-        return (
-          <Todo
-            key={t.id}
-            TodoName={t.title}
-            id={t.id}
-            //DeleteAtodo={DeleteTodo}
-            EditAtodo={EditTodo}
-            CheckTodo={DoneTodo}
-            IsCompleted={t.isCompleted}
-          />
-        );
-      }
-    });
+    FilterTodos = todos.filter((t) => !t.isCompleted);
   }
-
+  const todoJsx = FilterTodos.map((t) => {
+    return (
+      <Todo
+        key={t.id}
+        TodoName={t.title}
+        id={t.id}
+        DeleteAtodo={ShowDeleteTodo}
+        EditAtodo={EditTodo}
+        CheckTodo={DoneTodo}
+        IsCompleted={t.isCompleted}
+      />
+    );
+  });
   return (
     <>
       <Container maxWidth="sm">
@@ -196,7 +167,7 @@ export default function TodoCard() {
               <ToggleButtons SortTheTodos={SortingTodos} />
             </div>
 
-            {FilterTodos}
+            {todoJsx}
           </CardContent>
           <CardActions
             style={{
@@ -220,17 +191,15 @@ export default function TodoCard() {
           </CardActions>
         </Card>
       </Container>
-      {open ? (
+      {open && (
         <Popup
           id={DeleteId}
           DeleteAtodo={DeleteTodo}
-          HandleOpen={handleOpen}
+          HandleOpen={ShowDeleteTodo}
           HandleClose={handleClose}
         />
-      ) : (
-        <></>
       )}
-      {AlertShow ? <AlertMo alertlabel={AlertMessage} /> : <></>}
+      {Alert ? <AlertMo alertlabel={Alert} /> : <></>}
     </>
   );
 }

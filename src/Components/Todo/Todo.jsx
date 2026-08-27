@@ -28,63 +28,6 @@ export default function Todo({
   function DoneTodo() {
     CheckTodo(id);
   }
-  const card = (
-    <div className="CardTodoEffect">
-      <CardContent
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "0px",
-          height: "10px",
-          paddingBottom: "3px",
-        }}
-      >
-        <div style={{ display: "flex", gap: "7px" }}>
-          <DeleteIcon
-            color="error"
-            style={{ cursor: "pointer" }}
-            className="DeleteIcon"
-            onClick={DeleteTodo}
-          />
-
-          <BorderColorRoundedIcon
-            color="warning"
-            style={{ cursor: "pointer" }}
-            className="EditIcon"
-            onClick={EditTodo}
-          />
-          {!IsCompleted ? (
-            <CheckCircleTwoToneIcon
-              color="success"
-              style={{ cursor: "pointer" }}
-              className="CheckIcon"
-              onClick={DoneTodo}
-            />
-          ) : (
-            <CancelIcon
-              color="error"
-              style={{ cursor: "pointer" }}
-              className="CancelIcon"
-              onClick={DoneTodo}
-            />
-          )}
-        </div>
-
-        <Typography
-          sx={{
-            fontSize: 23,
-            textAlign: "end",
-          }}
-          className="tajawal-bold"
-        >
-          {TodoName}
-        </Typography>
-      </CardContent>
-
-      <CardActions />
-    </div>
-  );
 
   return (
     <Card
@@ -95,7 +38,61 @@ export default function Todo({
         marginBottom: "20px",
       }}
     >
-      {card}
+      <div className="CardTodoEffect">
+        <CardContent
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: "0px",
+            height: "10px",
+            paddingBottom: "3px",
+          }}
+        >
+          <div style={{ display: "flex", gap: "7px" }}>
+            <DeleteIcon
+              color="error"
+              style={{ cursor: "pointer" }}
+              className="DeleteIcon"
+              onClick={DeleteTodo}
+            />
+
+            <BorderColorRoundedIcon
+              color="warning"
+              style={{ cursor: "pointer" }}
+              className="EditIcon"
+              onClick={EditTodo}
+            />
+            {!IsCompleted ? (
+              <CheckCircleTwoToneIcon
+                color="success"
+                style={{ cursor: "pointer" }}
+                className="CheckIcon"
+                onClick={DoneTodo}
+              />
+            ) : (
+              <CancelIcon
+                color="error"
+                style={{ cursor: "pointer" }}
+                className="CancelIcon"
+                onClick={DoneTodo}
+              />
+            )}
+          </div>
+
+          <Typography
+            sx={{
+              fontSize: 23,
+              textAlign: "end",
+            }}
+            className="tajawal-bold"
+          >
+            {TodoName}
+          </Typography>
+        </CardContent>
+
+        <CardActions />
+      </div>
     </Card>
   );
 }
