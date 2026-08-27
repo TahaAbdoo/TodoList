@@ -6,8 +6,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useContext } from "react";
-import { TodosContext } from "../../Contexts/TodosContexts";
+/*import { useContext } from "react";
+import { TodosContext } from "../../Contexts/TodosContexts";*/
 import "./Todo.css";
 export default function Todo({
   TodoName,
@@ -17,7 +17,7 @@ export default function Todo({
   CheckTodo,
   IsCompleted,
 }) {
-  const { todos, setTodos } = useContext(TodosContext);
+  //const { todos, setTodos } = useContext(TodosContext);
 
   function DeleteTodo() {
     DeleteAtodo(id);
@@ -25,7 +25,7 @@ export default function Todo({
   function EditTodo() {
     EditAtodo(id);
   }
-  function DoneTodo() {
+  function CheckCancelTodo() {
     CheckTodo(id);
   }
 
@@ -68,14 +68,14 @@ export default function Todo({
                 color="success"
                 style={{ cursor: "pointer" }}
                 className="CheckIcon"
-                onClick={DoneTodo}
+                onClick={CheckCancelTodo}
               />
             ) : (
               <CancelIcon
                 color="error"
                 style={{ cursor: "pointer" }}
                 className="CancelIcon"
-                onClick={DoneTodo}
+                onClick={CheckCancelTodo}
               />
             )}
           </div>
