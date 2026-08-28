@@ -5,24 +5,24 @@ export default function Add({
   AddTodoFunction,
   Todo,
   ClearInput,
+  disabled,
 }) {
   function AddTodo() {
     if (Todo.title != "") {
       AddTodoFunction();
       ClearInput();
-    } else {
-      alert("قم بكتابة المهمة");
     }
   }
   return (
     <>
       <Button
         size="meduim"
-        color="error"
+        color="success"
         style={{ fontWeight: "bold" }}
         variant="contained"
         className="tajawal-bold"
         onClick={AddTodo}
+        disabled={disabled}
       >
         {ButtonLabel}
       </Button>

@@ -9,24 +9,17 @@ import CancelIcon from "@mui/icons-material/Cancel";
 /*import { useContext } from "react";
 import { TodosContext } from "../../Contexts/TodosContexts";*/
 import "./Todo.css";
-export default function Todo({
-  TodoName,
-  id,
-  DeleteAtodo,
-  EditAtodo,
-  CheckTodo,
-  IsCompleted,
-}) {
+export default function Todo({ DeleteAtodo, EditAtodo, CheckTodo, todo }) {
   //const { todos, setTodos } = useContext(TodosContext);
 
   function DeleteTodo() {
-    DeleteAtodo(id);
+    DeleteAtodo(todo.id);
   }
   function EditTodo() {
-    EditAtodo(id);
+    EditAtodo(todo.id);
   }
   function CheckCancelTodo() {
-    CheckTodo(id);
+    CheckTodo(todo.id);
   }
 
   return (
@@ -63,7 +56,7 @@ export default function Todo({
               className="EditIcon"
               onClick={EditTodo}
             />
-            {!IsCompleted ? (
+            {!todo.isCompleted ? (
               <CheckCircleTwoToneIcon
                 color="success"
                 style={{ cursor: "pointer" }}
@@ -85,9 +78,12 @@ export default function Todo({
               fontSize: 23,
               textAlign: "end",
             }}
-            className="tajawal-bold"
+            className="b"
+            style={{
+              textDecoration: todo.IsCompleted ? "line-through" : "none",
+            }}
           >
-            {TodoName}
+            {todo.title}
           </Typography>
         </CardContent>
 

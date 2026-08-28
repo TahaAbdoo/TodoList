@@ -44,7 +44,7 @@ export default function TodoCard() {
         },
       ]);
 
-      setAlert("تمت الإضافة");
+      setAlert("تمت اضافة المهمة بنجاح");
     }
 
     setInput("");
@@ -91,13 +91,11 @@ export default function TodoCard() {
   //*** Check The Todo */
   function CheckTodo(id) {
     const todo = todos.find((t) => t.id === id);
-    console.log(todo);
     setTodos((prevs) =>
       prevs.map((t) =>
         t.id === id ? { ...t, isCompleted: !t.isCompleted } : t,
       ),
     );
-    console.log(todo.isCompleted);
     //todo  تمثل الحالة القديمة
     !todo.isCompleted
       ? setAlert("تم إنجاز المهمة بنجاح")
@@ -111,7 +109,6 @@ export default function TodoCard() {
   //sort Varible  Refactor
   let FilterTodos = null;
   if (filter === "all") {
-    console.log(todos);
     FilterTodos = todos;
   } else if (filter === "Completed") {
     FilterTodos = todos.filter((t) => t.isCompleted);
@@ -122,19 +119,20 @@ export default function TodoCard() {
     return (
       <Todo
         key={t.id}
-        TodoName={t.title}
-        id={t.id}
         DeleteAtodo={ShowDeleteTodo}
         EditAtodo={EditTodo}
         CheckTodo={CheckTodo}
-        IsCompleted={t.isCompleted}
+        todo={t}
       />
     );
   });
   return (
     <>
       <Container maxWidth="sm">
-        <Card sx={{ minWidth: 275 }} style={{ height: "auto" }}>
+        <Card
+          sx={{ minWidth: 275 }}
+          style={{ maxHeight: "80vh", overflow: "scroll" }}
+        >
           <CardContent>
             <Typography
               className="tajawal-bold"
@@ -163,6 +161,7 @@ export default function TodoCard() {
                 AddTodoFunction={AddTodo}
                 Todo={{ id: uuidv4(), title: input }}
                 ClearInput={ClearInput}
+                disabled={input.length == 0}
               />
             </div>
             <div style={{ width: "60%", marginLeft: "30px" }}>

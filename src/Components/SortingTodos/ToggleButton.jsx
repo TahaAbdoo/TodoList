@@ -14,8 +14,8 @@ export default function ToggleButtons({ SortTheTodos }) {
 
   return (
     <ToggleButtonGroup
-      color="warning"
       value={alignment}
+      color="secondary"
       exclusive
       style={{ marginBottom: "25px" }}
       onChange={handleChange}
