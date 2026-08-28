@@ -6,7 +6,7 @@ import Add from "../Button/Add";
 import Typography from "@mui/material/Typography";
 import InsertTodo from "../TextInput/InsertTodo";
 import Todo from "../Todo/Todo";
-import { v4 as uuidv4 } from "uuid";
+import { parse, v4 as uuidv4 } from "uuid";
 import "../Todo/Todo.css";
 import { useState, useEffect } from "react";
 import AlertMo from "../alert/Alert";
@@ -27,26 +27,38 @@ export default function TodoCard() {
   const openPopup = DeleteId !== null ? true : false;
   //***Add Todo***
   function AddTodo() {
+    //localStorage.setItem("todos", JSON.stringify(todos));
     if (EditId !== null) {
-      setTodos((prev) =>
-        prev.map((t) => (t.id === EditId ? { ...t, title: input } : t)),
+      const EditTodos = todos.map((t) =>
+        t.id === EditId ? { ...t, title: input } : t,
       );
+      setTodos(EditTodos);
+      localStorage.setItem("todos", JSON.stringify(EditTodos));
+      /*setTodos((prev) =>
+        prev.map((t) => (t.id === EditId ? { ...t, title: input } : t)),
+      );*/
 
       setAlert("تم تعديل المهمة بنجاح");
       setEditId(null);
     } else {
-      setTodos((prev) => [
+      /*setTodos((prev) => [
         ...prev,
         {
           id: uuidv4(),
           title: input,
           isCompleted: false,
         },
-      ]);
-
+      ]);*/
+      const newTodo = {
+        id: uuidv4(),
+        title: input,
+        isCompleted: false,
+      };
+      const updateTodos = [...todos, newTodo];
+      setTodos(updateTodos);
+      localStorage.setItem("todos", JSON.stringify(updateTodos));
       setAlert("تمت اضافة المهمة بنجاح");
     }
-
     setInput("");
   }
   //***handle close Popup */
@@ -55,12 +67,14 @@ export default function TodoCard() {
   }
   //*** Delete Todo***
   function DeleteTodo(id) {
-    const newtodos = todos.filter((t) => {
+    const updateTodos = todos.filter((t) => {
       return t.id != id;
     });
+
     setDeleteId(null);
     setAlert("تم حذف المهمة بنجاح");
-    setTodos(newtodos);
+    setTodos(updateTodos);
+    localStorage.setItem("todos", JSON.stringify(updateTodos));
   }
   function ShowDeleteTodo(id) {
     setDeleteId(id);
@@ -69,6 +83,9 @@ export default function TodoCard() {
   //***Edit Todo */
   function EditTodo(id) {
     const todo = todos.find((t) => t.id === id);
+    console.log("id:", id);
+    console.log("todos:", todos);
+    console.log("todo:", todo);
     setInput(todo.title);
     setEditId(id);
   }
@@ -91,11 +108,17 @@ export default function TodoCard() {
   //*** Check The Todo */
   function CheckTodo(id) {
     const todo = todos.find((t) => t.id === id);
-    setTodos((prevs) =>
+    const updateTodos = todos.map((t) =>
+      t.id === id ? { ...t, isCompleted: !t.isCompleted } : t,
+    );
+    setTodos(updateTodos);
+    localStorage.setItem("todos", JSON.stringify(updateTodos));
+    /*setTodos((prevs) =>
       prevs.map((t) =>
         t.id === id ? { ...t, isCompleted: !t.isCompleted } : t,
       ),
-    );
+    );*/
+
     //todo  تمثل الحالة القديمة
     !todo.isCompleted
       ? setAlert("تم إنجاز المهمة بنجاح")
@@ -115,6 +138,7 @@ export default function TodoCard() {
   } else if (filter === "UnCompleted") {
     FilterTodos = todos.filter((t) => !t.isCompleted);
   }
+
   const todoJsx = FilterTodos.map((t) => {
     return (
       <Todo
@@ -126,12 +150,22 @@ export default function TodoCard() {
       />
     );
   });
+  //side Effects
+  useEffect(() => {
+    if (localStorage.getItem("todos")) {
+      const TodosStorage = JSON.parse(localStorage.getItem("todos"));
+      setTodos(TodosStorage);
+    } else {
+      setTodos([]);
+    }
+  }, []);
+  // [] FOR fIRST time
   return (
     <>
       <Container maxWidth="sm">
         <Card
           sx={{ minWidth: 275 }}
-          style={{ maxHeight: "80vh", overflow: "scroll" }}
+          style={{ maxHeight: "80vh", overflowY: "scroll" }}
         >
           <CardContent>
             <Typography

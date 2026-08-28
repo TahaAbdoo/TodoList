@@ -80,7 +80,7 @@ export default function Todo({ DeleteAtodo, EditAtodo, CheckTodo, todo }) {
             }}
             className="b"
             style={{
-              textDecoration: todo.IsCompleted ? "line-through" : "none",
+              textDecoration: todo.isCompleted ? "line-through" : "none",
             }}
           >
             {todo.title}
