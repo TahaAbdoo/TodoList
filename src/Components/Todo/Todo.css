@@ -21,3 +21,8 @@
 .CardTodoEffect:hover{
   padding: 10px 0;
 }
+@media (max-width: 600px) {
+  .TodoTitle{
+    font-size: 17px;
+  }
+}

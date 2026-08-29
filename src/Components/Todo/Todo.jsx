@@ -78,7 +78,7 @@ export default function Todo({ DeleteAtodo, EditAtodo, CheckTodo, todo }) {
               fontSize: 23,
               textAlign: "end",
             }}
-            className="b"
+            className="TodoTitle"
             style={{
               textDecoration: todo.isCompleted ? "line-through" : "none",
             }}

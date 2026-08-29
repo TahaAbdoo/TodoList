@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import "./PopupStyle.css";
 const style = {
   position: "absolute",
   top: "50%",
@@ -24,15 +25,25 @@ export default function Popup({ id, DeleteAtodo, HandleOpen, HandleClose }) {
         <Modal
           open={open}
           onClose={HandleClose}
+          className="Modal"
           aria-labelledby="parent-modal-title"
           aria-describedby="parent-modal-description"
         >
-          <Box sx={{ ...style, width: 400 }}>
-            <h2 id="parent-modal-title" style={{ color: "#d81c1c" }}>
+          <Box sx={{ ...style, width: 400 }} className="ModalBox">
+            <h2
+              id="parent-modal-title"
+              style={{ color: "#d81c1c" }}
+              className="ModalTitle"
+            >
               هل انت متأكد لحذف المهمة
             </h2>
 
-            <Button variant="outlined" color="error" onClick={DeleteTodo}>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={DeleteTodo}
+              className="Button"
+            >
               نعم انا متأكد
             </Button>
 
@@ -41,6 +52,7 @@ export default function Popup({ id, DeleteAtodo, HandleOpen, HandleClose }) {
               color="warning"
               onClick={HandleClose}
               style={{ marginLeft: "10px" }}
+              className="Button"
             >
               لا لااريد
             </Button>

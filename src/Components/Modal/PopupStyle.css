@@ -1,0 +1,15 @@
+
+
+
+@media(max-width:600px){
+    .ModalBox{
+       width: 230px;
+       text-align: end;         
+    }
+    .ModalTitle{
+        font-size:19px;
+    }
+    .Button{
+        font-size: 10px;
+    }
+}

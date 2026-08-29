@@ -6,10 +6,11 @@ export default function AlertMo({ alertlabel }) {
     <Alert
       icon={<CheckIcon fontSize="inherit" />}
       severity="success"
+      className="Alert"
       style={{
         position: "fixed",
-        bottom: "20px",
-        left: "20px",
+        top: "10px",
+        right: "20px",
       }}
     >
       {alertlabel}
